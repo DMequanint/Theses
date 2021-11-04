@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[15]:
+# In[3]:
 
 
 import pandas as pd
@@ -9,7 +9,7 @@ import time
 import datetime
 df = pd.DataFrame( columns=["announcements", "nlri_ann", "withdrawals", "origin_changes", "number_rare_ases", "as_path_max", "imp_wd", "rare_ases_max",
                         "as_path_avg", "nadas", "flaps", "dups", "news", "timestamp"])
-dfsource = pd.read_csv('C:/2020-2021/Data/Datasets/dataset_aws-leak_15547_5_rrc04.csv', delimiter=',')
+dfsource = pd.read_csv('C:/2020-2021/Data/Datasets/dataset_slammer_513_5_rrc04.csv', delimiter=',')
 df["announcements"]=dfsource["announcements"]
 df["nlri_ann"]=dfsource["nlri_ann"]
 df["withdrawals"]=dfsource["withdrawals"]
@@ -32,13 +32,13 @@ df["class"]= dfsource["class"]
 #df["caseID"] = df.groupby(df.timestamp.dt.floor('15T')).ffill(axis = 1)
 #df["caseID"]= pd.Series(df.groupby(pd.Grouper(freq='15T',key='event_date')))
 df["caseID"]= df.groupby(df.timestamp.dt.floor('15T')).grouper.group_info[0] + 1
-df["caseID"] = "A0" + df["caseID"].astype(str) 
+df["caseID"] = "S0" + df["caseID"].astype(str) 
 df["eventType"] = df.groupby(df["class"]).grouper.group_info[0]
 df.loc[df['eventType'] == 0, 'eventType'] = 'Regular'
-df.loc[df['eventType'] == 1, 'eventType'] = 'Direct Unintended Anomaly'
+df.loc[df['eventType'] == 1, 'eventType'] = 'Indirect Anomaly'
 df["activityName"] = df.groupby(df["class"]).grouper.group_info[0]
 df.loc[df['activityName'] == 0, 'activityName'] = 'Normal'
-df.loc[df['activityName'] == 1, 'activityName'] = 'AWS Leak Attack'
+df.loc[df['activityName'] == 1, 'activityName'] = 'Slammer vrius Attack'
 first_column = df.pop('caseID')
 df.insert(0, 'caseID', first_column)
 second_column = df.pop('eventType')
@@ -46,7 +46,7 @@ df.insert(1, 'eventType', second_column)
 third_column = df.pop('activityName')
 df.insert(2, 'activityName', third_column)
 df.drop("class", inplace=True, axis=1)
-df.to_csv('C:/2020-2021/Data/Datasets/dataset_aws-leak_15547_5_rrc04_V2.csv', index=False)
+df.to_csv('C:/2020-2021/Data/Datasets/dataset_slammer_513_5_rrc04_V2.csv', index=False)
 df.head(100)
 
 
