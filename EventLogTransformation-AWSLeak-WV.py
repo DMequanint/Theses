@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[3]:
 
 
 import pandas as pd
@@ -38,7 +38,7 @@ df.loc[df['eventName'] == 0, 'eventType'] = 'Regular'
 df.loc[df['eventName'] == 1, 'eventType'] = 'Direct Unintended Anomaly'
 df["activityName"] = df.groupby(df["class"]).grouper.group_info[0]
 df.loc[df['activityName'] == 0, 'activityName'] = 'Normal'
-df.loc[df['activityName'] == 1, 'activityName'] = 'Nimda vrius Attack'
+df.loc[df['activityName'] == 1, 'activityName'] = 'AWS Leak'
 df["eventType"] = df.groupby(["activityName", "origin_changes"]).grouper.group_info[0] + 1
 df["eventType"] = "Evt0" + df["eventType"].astype(str)
 #first_column = df.pop('caseID')

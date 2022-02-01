@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[8]:
 
 
 import pandas as pd
@@ -10,6 +10,8 @@ import datetime
 df = pd.DataFrame( columns=["announcements", "nlri_ann", "withdrawals", "origin_changes", "number_rare_ases", "as_path_max", "imp_wd", "rare_ases_max",
                         "as_path_avg", "nadas", "flaps", "dups", "news", "timestamp"])
 dfsource = pd.read_csv('C:/2020-2021/Data/Datasets/CombinedDataset/dataset_combined_1_rrc04_balancedF.csv', delimiter=',')
+df["eventName"]=dfsource["eventName"]
+df["activityName"]=dfsource["activityName"]
 df["announcements"]=dfsource["announcements"]
 df["nlri_ann"]=dfsource["nlri_ann"]
 df["withdrawals"]=dfsource["withdrawals"]
@@ -33,12 +35,7 @@ df["class"]= dfsource["class"]
 #df["caseID"]= pd.Series(df.groupby(pd.Grouper(freq='15T',key='event_date')))
 #df["caseID"]= df.groupby(df.timestamp.dt.floor('15T')).grouper.group_info[0] + 1
 #df["caseID"] = "S0" + df["caseID"].astype(str) 
-df["eventName"] = df.groupby(df["class"]).grouper.group_info[0]
-df.loc[df['eventName'] == 0, 'eventName'] = 'Regular'
-df.loc[df['eventName'] == 1, 'eventName'] = 'Indirect Anomaly'
-df["activityName"] = df.groupby(df["class"]).grouper.group_info[0]
-df.loc[df['activityName'] == 0, 'activityName'] = 'Normal'
-df.loc[df['activityName'] == 1, 'activityName'] = 'Slammer vrius Attack'
+
 df["eventType"] = df.groupby(["activityName", "origin_changes"]).grouper.group_info[0] + 1
 df["eventType"] = "Evt0" + df["eventType"].astype(str)
 #first_column = df.pop('caseID')
