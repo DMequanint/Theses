@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[8]:
+# In[1]:
 
 
 import pandas as pd
@@ -9,7 +9,7 @@ import time
 import datetime
 df = pd.DataFrame( columns=["announcements", "nlri_ann", "withdrawals", "origin_changes", "number_rare_ases", "as_path_max", "imp_wd", "rare_ases_max",
                         "as_path_avg", "nadas", "flaps", "dups", "news", "timestamp"])
-dfsource = pd.read_csv('C:/2020-2021/Data/Datasets/Nimda/dataset_nimda_513_1_rrc04_balancedF.csv', delimiter=',')
+dfsource = pd.read_csv('C:/2020-2021/Data/Datasets/Nimda/dataset_nimda_513_1_rrc04_EqualF.csv', delimiter=',')
 df["announcements"]=dfsource["announcements"]
 df["nlri_ann"]=dfsource["nlri_ann"]
 df["withdrawals"]=dfsource["withdrawals"]
